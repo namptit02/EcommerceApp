@@ -1,0 +1,148 @@
+version: "3.7"
+services:
+  registry-server:
+    build: ./registry-server
+    restart: always
+    ports:
+      - "8761:8761"
+
+#  api-gateway:
+#    build: ./api-gateway
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - registry-server
+
+  user-service:
+    build: ./user-service
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - registry-server
+      - user-mysqldb
+
+#  product-service:
+#    build: ./product-service
+#    restart: always
+#    ports:
+#      - "8082:8082"
+#    depends_on:
+#      - registry-server
+#      - product-mysqldb
+#
+#  cart-service:
+#    build: ./cart-service
+#    restart: always
+#    ports:
+#      - "8083:8083"
+#    depends_on:
+#      - registry-server
+#      - cart-mysqldb
+#
+#  order-service:
+#    build: ./order-service
+#    restart: always
+#    ports:
+#      - "8084:8084"
+#    depends_on:
+#      - registry-server
+#      - order-mysqldb
+#
+#  inventory-service:
+#    build: ./inventory-service
+#    restart: always
+#    ports:
+#      - "8085:8085"
+#    depends_on:
+#      - registry-server
+#      - inventory-mysqldb
+#
+#  payment-service:
+#    build: ./payment-service
+#    restart: always
+#    ports:
+#      - "8086:8086"
+#    depends_on:
+#      - registry-server
+
+  user-mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: EA-user-service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Dungthieu1972
+      MYSQL_ROOT_PASSWORD: Dungthieu1972
+    volumes:
+      - mysql_user_data:/var/lib/mysql
+
+#  product-mysqldb:
+#    image: "mysql:8.0"
+#    restart: always
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      MYSQL_DATABASE: product-service-db
+#      MYSQL_USER: product-service
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    volumes:
+#      - mysql_product_data:/var/lib/mysql
+#
+#  cart-mysqldb:
+#    image: "mysql:8.0"
+#    restart: always
+#    ports:
+#      - "3308:3306"
+#    environment:
+#      MYSQL_DATABASE: cart-service-db
+#      MYSQL_USER: cart-service
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    volumes:
+#      - mysql_cart_data:/var/lib/mysql
+#
+#  order-mysqldb:
+#    image: "mysql:8.0"
+#    restart: always
+#    ports:
+#      - "3309:3306"
+#    environment:
+#      MYSQL_DATABASE: order-service-db
+#      MYSQL_USER: order-service
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    volumes:
+#      - mysql_order_data:/var/lib/mysql
+#
+#  inventory-mysqldb:
+#    image: "mysql:8.0"
+#    restart: always
+#    ports:
+#      - "3310:3306"
+#    environment:
+#      MYSQL_DATABASE: inventory-service-db
+#      MYSQL_USER: inventory-service
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    volumes:
+#      - mysql_inventory_data:/var/lib/mysql
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  mysql_user_data:
+#  mysql_product_data:
+#  mysql_cart_data:
+#  mysql_order_data:
+#  mysql_inventory_data:
+
