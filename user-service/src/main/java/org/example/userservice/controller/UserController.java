@@ -1,6 +1,8 @@
 package org.example.userservice.controller;
 
-import org.example.userservice.dto.RegisterDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.userservice.dto.request.RegisterDTO;
 import org.example.userservice.model.User;
 import org.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
+@Slf4j
 public class UserController {
     @Autowired
     UserService userService;
