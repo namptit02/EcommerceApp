@@ -1,0 +1,50 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.42:8761/eureka/
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+#              "http://127.0.0.1:3000/",
+            allowedOrigins: "http://192.168.1.42:8080"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=users/v3/api-docs, /users/**
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+#      - url: /products/v3/api-docs
+#        name: Product Service
+#      - url: /carts/v3/api-docs
+#        name: Cart Service
+      - url: /users/v3/api-docs
+        name: User Service
+#      - url: /inventories/v3/api-docs
+#        name: Inventory Service
+#      - url: /payments/v3/api-docs
+#        name: Payment Service
+#      - url: /orders/v3/api-docs
+#        name: Order Service

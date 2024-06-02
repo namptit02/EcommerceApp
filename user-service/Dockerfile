@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM openjdk:23-ea-17-jdk
 WORKDIR /app
 COPY ./target/user-service.jar .
 EXPOSE 8081

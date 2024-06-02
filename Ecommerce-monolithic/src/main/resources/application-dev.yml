@@ -1,11 +1,11 @@
 spring:
   application:
-    name: user-service
+    name: ecommerce-monolithic
 
   datasource:
     username: root
     password: Dungthieu1972
-    url: jdbc:mysql://localhost:3306/EA-user-service
+    url: jdbc:mysql://localhost:3306/ecommerce-monolithic
   jpa:
     hibernate:
       ddl-auto: update
